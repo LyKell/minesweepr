@@ -5,10 +5,10 @@
 
 
 void count_mines(char** grid, int x, int y, int* nb_mines) {
-    if (!(x < 0 || x >= TAILLE_X || y < 0 || y >= TAILLE_Y)) {
+    if (!(x < 0 || x >= SIZE_X || y < 0 || y >= SIZE_Y)) {
         // printf("%c\n", grid[x][y]);
             if (grid[x][y] == 'x') {
-            nb_mines += 1;
+            *nb_mines += 1;
         }
     }
 }

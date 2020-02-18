@@ -56,7 +56,7 @@ void free_grid(char** grid, int tailleX, int tailleY) {
 
 
 void complete_grid(char** grid, int tailleX, int tailleY) {
-    int i, j, k, nb_mines = 0;
+    int i, j, nb_mines = 0;
     for (i = 0; i < tailleX; i++) {
         for (j = 0; j < tailleY; j++) {
             if (grid[i][j] != 'x') {
