@@ -20,6 +20,7 @@ int main(int argc, char const *argv[]) {
     int difficulty; // Difficulty of the game
     int mouseX, mouseY, realX, realY;   // Mouse position as real coordinates and grid coordinates
     int sizeX, sizeY, mines;    // Size of the board and number of mines
+    int endgame = 0;
 
     srand(time(NULL));
 
@@ -47,23 +48,25 @@ int main(int argc, char const *argv[]) {
             i++;
         }
     }
-    show_grid(grid, sizeX, sizeY);
     complete_grid(grid, sizeX, sizeY);
 
     create_window(sizeX, sizeY);
-    draw_window(grid, grid_secondary, sizeX, sizeY);
-
-    printf("\n");
-    show_grid(grid, sizeX, sizeY);
+    draw_window(grid, grid_secondary, sizeX, sizeY, endgame);
 
     do {
-        MLV_wait_mouse(&mouseY, &mouseX);
+        MLV_get_mouse_position(&mouseY, &mouseX);
         realX = mouseX / CASES_SIZE;
         realY = mouseY / CASES_SIZE;
 
-        reveal_cases(grid, grid_secondary, sizeX, sizeY, realX, realY);
-        draw_window(grid, grid_secondary, sizeX, sizeY);
-
+        if (MLV_get_mouse_button_state(MLV_BUTTON_LEFT) == MLV_PRESSED) {
+            reveal_cases(grid, grid_secondary, sizeX, sizeY, realX, realY);
+            if (grid[realX][realY] == 'x') {
+                endgame = 1;
+            }
+        } else if (MLV_get_mouse_button_state(MLV_BUTTON_RIGHT) == MLV_PRESSED) {
+            // Hint
+        }
+        draw_window(grid, grid_secondary, sizeX, sizeY, endgame);
 
     } while (1);
 
