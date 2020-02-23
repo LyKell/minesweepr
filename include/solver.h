@@ -3,4 +3,6 @@
 
 #include "../include/grid.h"
 
+void reveal_cases(char** grid, char** grid_secondary, int sizeX, int sizeY, int x, int y);
+
 #endif
