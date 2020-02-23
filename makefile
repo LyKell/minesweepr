@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall
 EXEC = Minesweeper
 LDFLAGS = -lMLV -lm
-OBJ = $(BIN)main.o $(BIN)grid.o $(BIN)mines.o $(BIN)solver.o $(BIN)IGraph.o
+OBJ = $(BIN)main.o $(BIN)grid.o $(BIN)mines.o $(BIN)solver.o $(BIN)IGraph.o $(BIN)difficulty.o
 OPT = -O2
 INCLUDE = include/
 SRC = src/
@@ -16,15 +16,15 @@ $(BIN)$(EXEC) : $(OBJ)
 
 $(BIN)main.o : $(SRC)main.c $(INCLUDE)grid.h $(INCLUDE)mines.h $(INCLUDE)IGraph.h $(INCLUDE)difficulty.h $(INCLUDE)solver.h
 
-$(BIN)grid.o : $(SRC)grid.c $(INCLUDE)grid.h $(INCLUDE)mines.h
+$(BIN)grid.o : $(SRC)grid.c $(INCLUDE)grid.h $(INCLUDE)mines.h $(INCLUDE)difficulty.h
 
-$(BIN)mines.o : $(SRC)mines.c $(INCLUDE)mines.h
+$(BIN)mines.o : $(SRC)mines.c $(INCLUDE)mines.h $(INCLUDE)difficulty.h
 
-$(BIN)IGraph.o : $(SRC)IGraph.c $(INCLUDE)IGraph.h $(INCLUDE)solver.h $(INCLUDE)grid.h $(INCLUDE)mines.h $(INCLUDE)difficulty.h
+$(BIN)IGraph.o : $(SRC)IGraph.c $(INCLUDE)IGraph.h $(INCLUDE)solver.h $(INCLUDE)grid.h $(INCLUDE)mines.h
 
-$(BIN)solver.o : $(SRC)solver.c $(INCLUDE)solver.h $(INCLUDE)grid.h $(INCLUDE)mines.h
+$(BIN)solver.o : $(SRC)solver.c $(INCLUDE)solver.h $(INCLUDE)grid.h $(INCLUDE)mines.h $(INCLUDE)difficulty.h
 
-$(BIN)difficulty.o : $(SRC)difficulty.c $(INCLUDE)grid.h $(INCLUDE)solver.h $(INCLUDE)mines.h
+$(BIN)difficulty.o : $(SRC)difficulty.c $(INCLUDE)difficulty.h
 
 $(BIN)%.o: $(SRC)%.c
 	$(CC) -c $< $(CFLAGS) $(LDFLAGS) $(OPT) -o $@

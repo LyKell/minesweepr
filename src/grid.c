@@ -60,7 +60,7 @@ void complete_grid(char** grid, int tailleX, int tailleY) {
     for (i = 0; i < tailleX; i++) {
         for (j = 0; j < tailleY; j++) {
             if (grid[i][j] != 'x') {
-                nb_mines = all_mines(grid, i, j);
+                nb_mines = all_mines(grid, i, j, tailleX, tailleY);
             }
             if (nb_mines > 0 && grid[i][j] != 'x') {
                 grid[i][j] = nb_mines + '0';
