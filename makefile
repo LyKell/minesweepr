@@ -8,7 +8,7 @@ OPT = -O2
 INCLUDE = include/
 SRC = src/
 BIN = bin/
-
+MKDIR_P = mkdir -p
 
 # Definition des commandes a effectuer
 $(BIN)$(EXEC) : $(OBJ)
@@ -27,6 +27,7 @@ $(BIN)solver.o : $(SRC)solver.c $(INCLUDE)solver.h $(INCLUDE)grid.h $(INCLUDE)mi
 $(BIN)difficulty.o : $(SRC)difficulty.c $(INCLUDE)difficulty.h
 
 $(BIN)%.o: $(SRC)%.c
+	mkdir -p $(BIN)
 	$(CC) -c $< $(CFLAGS) $(LDFLAGS) $(OPT) -o $@
 
 

@@ -18,9 +18,14 @@ int main(int argc, char const *argv[]) {
     int i = 0;
     int x, y;   // Coordinates to place the bombs
     int difficulty; // Difficulty of the game
-    int mouseX, mouseY, realX, realY;   // Mouse position as real coordinates and grid coordinates
+    int mouseX, mouseY; // Mouse position as real coordinates (X = abscissa, Y = ordinate)
+    int gridX, gridY;   // Mouse position as real coordinates and grid coordinates (X = abscissa, Y = ordinate)
     int sizeX, sizeY, mines;    // Size of the board and number of mines
     int endgame = 0;
+    int unicode;
+    int init_done = 0;
+    MLV_Keyboard_button sym;
+    MLV_Keyboard_modifier mod;
 
     srand(time(NULL));
 
@@ -39,38 +44,39 @@ int main(int argc, char const *argv[]) {
     grid_secondary = allocate_grid(sizeX, sizeY);
     fill_grid(grid_secondary, sizeX, sizeY);
 
-    while (i < mines) {
-        x = rand() % sizeX;
-        y = rand() % sizeY;
-        if (grid[x][y] == '-') {
-            grid[x][y] = 'x';
-            grid_secondary[x][y] = 'x';
-            i++;
-        }
-    }
-    complete_grid(grid, sizeX, sizeY);
-
     create_window(sizeX, sizeY);
     draw_window(grid, grid_secondary, sizeX, sizeY, endgame);
 
     do {
-        MLV_get_mouse_position(&mouseY, &mouseX);
-        realX = mouseX / CASES_SIZE;
-        realY = mouseY / CASES_SIZE;
+        MLV_wait_mouse(&mouseY, &mouseX);
+        gridX = mouseX / CASES_SIZE;
+        gridY = mouseY / CASES_SIZE;
+
+        if (!init_done) {
+            generate_mines(mines, sizeX, sizeY, gridX, gridY, grid, grid_secondary);
+            complete_grid(grid, sizeX, sizeY);
+            init_done = 1;
+        }
 
         if (MLV_get_mouse_button_state(MLV_BUTTON_LEFT) == MLV_PRESSED) {
-            reveal_cases(grid, grid_secondary, sizeX, sizeY, realX, realY);
-            if (grid[realX][realY] == 'x') {
+            reveal_cases(grid, grid_secondary, sizeX, sizeY, gridX, gridY);
+            if (grid[gridX][gridY] == 'x') {
                 endgame = 1;
             }
+
         } else if (MLV_get_mouse_button_state(MLV_BUTTON_RIGHT) == MLV_PRESSED) {
             // Hint
         }
+
+
         draw_window(grid, grid_secondary, sizeX, sizeY, endgame);
+        if (endgame) {
+            break;
+        }
 
     } while (1);
 
-    
+    MLV_wait_keyboard_or_mouse(&sym, &mod, &unicode, &mouseY, &mouseX);
     
     free_grid(grid, sizeX, sizeY);
     MLV_free_window();
