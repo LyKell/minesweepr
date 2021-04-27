@@ -15,8 +15,6 @@
 int main(int argc, char const *argv[]) {
     char** grid;    // Grid containing the layout of the board
     char** grid_secondary;  // Grid containing data on what has been revealed
-    int i = 0;
-    int x, y;   // Coordinates to place the bombs
     int difficulty; // Difficulty of the game
     int mouseX, mouseY; // Mouse position as real coordinates (X = abscissa, Y = ordinate)
     int gridX, gridY;   // Mouse position as real coordinates and grid coordinates (X = abscissa, Y = ordinate)
@@ -35,8 +33,6 @@ int main(int argc, char const *argv[]) {
 
         set_difficulty(difficulty, &sizeX, &sizeY, &mines);
     } while (0 >= difficulty || difficulty > 3);
-
-
 
     grid = allocate_grid(sizeX, sizeY);
     fill_grid(grid, sizeX, sizeY);
@@ -68,8 +64,8 @@ int main(int argc, char const *argv[]) {
             // Hint
         }
 
-
         draw_window(grid, grid_secondary, sizeX, sizeY, endgame);
+        
         if (endgame) {
             break;
         }

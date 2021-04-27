@@ -14,20 +14,54 @@ void draw_cases(char** grid, char** grid_secondary, int sizeX, int sizeY) {
     char string[2] = "\0";
     for (i = 0; i < sizeX; i++) {
         for (j = 0; j < sizeY; j++) {
-            if (grid_secondary[i][j] == ' ') {
-                if (grid[i][j] == '-') {
+            if (grid_secondary[i][j] == ' ') { // Case has been revealed
+                if (grid[i][j] == '-') { // Case is empty
                     MLV_draw_filled_rectangle(j * CASES_SIZE, i * CASES_SIZE, CASES_SIZE, CASES_SIZE, MLV_COLOR_LIGHT_GRAY);
-                } else if (grid[i][j] == 'x') {
+                } else if (grid[i][j] == 'x') { // Case is mine
                     MLV_draw_filled_rectangle(j * CASES_SIZE, i * CASES_SIZE, CASES_SIZE, CASES_SIZE, MLV_COLOR_RED);
-                } else {
+                } else { // Case is number
                     string[0] = grid[i][j];
-                    MLV_draw_text_box(j * CASES_SIZE, i * CASES_SIZE, CASES_SIZE, CASES_SIZE, string, 9, MLV_COLOR_GRAY60, MLV_COLOR_BLUE, MLV_COLOR_GRAY60, MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER);
+                    draw_number(i, j, string);
                 }
-            } else {
+            } else { // Case is hidden
                 MLV_draw_filled_rectangle(j * CASES_SIZE, i * CASES_SIZE, CASES_SIZE, CASES_SIZE, MLV_COLOR_DARK_GRAY);
             }
         }
     }
+}
+
+
+void draw_number(int i, int j, char string[2]) {
+    MLV_Color color;
+    switch (string[0]) {
+        case '1':
+            color = MLV_COLOR_BLUE;
+            break;
+        case '2':
+            color = MLV_COLOR_DARK_GREEN;
+            break;
+        case '3':
+            color = MLV_COLOR_RED;
+            break;
+        case '4':
+            color = MLV_COLOR_DARK_BLUE;
+            break;
+        case '5':
+            color = MLV_COLOR_DARK_RED;
+            break;
+        case '6':
+            color = MLV_COLOR_CYAN1;
+            break;
+        case '7':
+            color = MLV_COLOR_BLACK;
+            break;
+        case '8':
+            color = MLV_COLOR_GREY;
+            break;
+        default:
+            color = MLV_COLOR_BLUE;
+    }
+    MLV_draw_text_box(j * CASES_SIZE, i * CASES_SIZE, CASES_SIZE, CASES_SIZE, string, 9, MLV_COLOR_LIGHT_GRAY, color, MLV_COLOR_LIGHT_GRAY, MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER);
 }
 
 
