@@ -16,10 +16,6 @@
 int main(int argc, char const *argv[]) {
     char** grid;    // Grid containing the layout of the board
     char** grid_secondary;  // Grid containing data on what has been revealed
-    char** empty_string;
-    MLV_Input_box** empty_box;
-    MLV_Mouse_button mouse_button;
-    MLV_Button_state button_state;
     int difficulty; // Difficulty of the game
     int mouseX, mouseY; // Mouse position as real coordinates (X = abscissa, Y = ordinate)
     int gridX, gridY;   // Mouse position as real coordinates and grid coordinates (X = abscissa, Y = ordinate)
@@ -61,6 +57,7 @@ int main(int argc, char const *argv[]) {
 
         if (MLV_get_mouse_button_state(MLV_BUTTON_LEFT) == MLV_PRESSED) {
             reveal_cases(grid, grid_secondary, sizeX, sizeY, gridX, gridY);
+            endgame = check_cases(grid, grid_secondary, sizeX, sizeY);
             if (grid[gridX][gridY] == 'x') {
                 endgame = 1;
             }

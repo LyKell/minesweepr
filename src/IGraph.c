@@ -80,7 +80,7 @@ void draw_grid(int sizeX, int sizeY) {
 }
 
 
-void draw_endgame(int sizeX, int sizeY) {
+void draw_endgame_loss(int sizeX, int sizeY) {
     int width, height;
     width = sizeY * CASES_SIZE;
     height = sizeX * CASES_SIZE;
@@ -89,11 +89,22 @@ void draw_endgame(int sizeX, int sizeY) {
 }
 
 
+void draw_endgame_win(int sizeX, int sizeY) {
+    int width, height;
+    width = sizeY * CASES_SIZE;
+    height = sizeX * CASES_SIZE;
+
+    MLV_draw_text_box(0, 0, width, height, "Victory !", 9, MLV_rgba(0, 0, 0, 0), MLV_COLOR_GREEN, MLV_rgba(255, 255, 255, 200), MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER);
+}
+
+
 void draw_window(char** grid, char** grid_secondary, int sizeX, int sizeY, int endgame) {
     draw_cases(grid, grid_secondary, sizeX, sizeY);
     draw_grid(sizeX, sizeY);
-    if (endgame) {
-        draw_endgame(sizeX, sizeY);
+    if (endgame == 1) {
+        draw_endgame_loss(sizeX, sizeY);
+    } else if (endgame == 2) {
+        draw_endgame_win(sizeX, sizeY);
     }
     MLV_actualise_window();
 }

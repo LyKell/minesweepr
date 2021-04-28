@@ -68,3 +68,15 @@ void complete_grid(char** grid, int sizeX, int sizeY) {
         }
     }
 }
+
+int check_cases(char** grid, char** grid_secondary, int sizeX, int sizeY) {
+    int i, j;
+    for (i = 0; i < sizeX; i++) {
+        for (j = 0; j < sizeY; j++) {
+            if (grid_secondary[i][j] == '-') {
+                return 0;
+            }
+        }
+    }
+    return 2;
+}
