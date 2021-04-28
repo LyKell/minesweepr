@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <MLV/MLV_all.h>
-#include "../include/grid.h"
-#include "../include/mines.h"
-#include "../include/IGraph.h"
 #include "../include/difficulty.h"
+#include "../include/grid.h"
+#include "../include/hint.h"
+#include "../include/IGraph.h"
+#include "../include/mines.h"
 #include "../include/solver.h"
 
 
@@ -15,6 +16,10 @@
 int main(int argc, char const *argv[]) {
     char** grid;    // Grid containing the layout of the board
     char** grid_secondary;  // Grid containing data on what has been revealed
+    char** empty_string;
+    MLV_Input_box** empty_box;
+    MLV_Mouse_button mouse_button;
+    MLV_Button_state button_state;
     int difficulty; // Difficulty of the game
     int mouseX, mouseY; // Mouse position as real coordinates (X = abscissa, Y = ordinate)
     int gridX, gridY;   // Mouse position as real coordinates and grid coordinates (X = abscissa, Y = ordinate)
@@ -59,12 +64,13 @@ int main(int argc, char const *argv[]) {
             if (grid[gridX][gridY] == 'x') {
                 endgame = 1;
             }
-
         } else if (MLV_get_mouse_button_state(MLV_BUTTON_RIGHT) == MLV_PRESSED) {
-            // Hint
+            set_hint(grid, grid_secondary, sizeX, sizeY, gridX, gridY);
         }
 
         draw_window(grid, grid_secondary, sizeX, sizeY, endgame);
+        // show_grid(grid, sizeX, sizeY);
+        // show_grid(grid_secondary, sizeX, sizeY);
         
         if (endgame) {
             break;

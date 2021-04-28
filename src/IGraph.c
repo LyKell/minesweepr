@@ -23,7 +23,11 @@ void draw_cases(char** grid, char** grid_secondary, int sizeX, int sizeY) {
                     string[0] = grid[i][j];
                     draw_number(i, j, string);
                 }
-            } else { // Case is hidden
+            } else if (grid_secondary[i][j] == '!') { // Case is hidden
+                MLV_draw_text_box(j * CASES_SIZE, i * CASES_SIZE, CASES_SIZE, CASES_SIZE, "!", 9, MLV_COLOR_LIGHT_GRAY, MLV_COLOR_RED, MLV_COLOR_LIGHT_GRAY, MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER);
+            } else if (grid_secondary[i][j] == '?') {
+                MLV_draw_text_box(j * CASES_SIZE, i * CASES_SIZE, CASES_SIZE, CASES_SIZE, "?", 9, MLV_COLOR_LIGHT_GRAY, MLV_COLOR_WHITE, MLV_COLOR_LIGHT_GRAY, MLV_TEXT_CENTER, MLV_HORIZONTAL_CENTER, MLV_VERTICAL_CENTER);
+            } else {
                 MLV_draw_filled_rectangle(j * CASES_SIZE, i * CASES_SIZE, CASES_SIZE, CASES_SIZE, MLV_COLOR_DARK_GRAY);
             }
         }
